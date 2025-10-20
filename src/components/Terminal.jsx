@@ -125,7 +125,7 @@ Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powersh
 ╚═══════════════════════════════════════╝
 
 Email:    valdez.gabe@hotmail.com
-Phome:    (808)446-6022
+Phone:    (808)446-6022
 
 Feel free to reach out for opportunities or collaborations!
 `
