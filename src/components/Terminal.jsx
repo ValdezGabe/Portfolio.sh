@@ -83,12 +83,18 @@ I have a strong foundation in networking, system administration, and problem-sol
 ║            PROJECTS                   ║
 ╚═══════════════════════════════════════╝
 
+DubBetter Ring
+An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a
+Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition. Using TensorFlow for on-device inference and WebSocket connections for low-latency streaming, the system provides instant event notifications, activity timelines, and a YouTube-style interface for reviewing security events. Built with React, TailwindCSS, and OpenCV, DubBetter Ring delivers enterprise-grade home security with an intuitive user experience
+Tech: React, TensorFlow, OpenCV, Raspberry Pi, Socket.io, TailwindCSS
+
 Game Server Automation
-Description
+Designed and implemented a fully automated infrastructure-as-code solution for deploying a containerized Minecraft server on AWS. Built using Terraform for infrastructure provisioning and Docker for containerization, the system automatically configures complete AWS networking
+architecture including VPC, security groups, and EC2 instances. Developed Bash automation scripts enabling single-command deployment and teardown workflows, significantly reducing operational overhead. Implemented production-ready features including persistent storage for game data, proper port routing for player connectivity, and encrypted SSH access for secure server administration.
 Tech: AWS EC2, Docker, Terraform
 
 BrainBurst
-Description
+Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design, increasing active learning engagement and reducing passive screen time by 40% across web and mobile interfaces
 Tech: React, JavaScript, Tailwind CSS, Supabas
 
 Terminal Portfolio
@@ -106,8 +112,8 @@ Tech: React, Javascript
 
 Certifications - CompTIA A+, CompTIA Network+, CompTIA Security+
 Languages - Python, C, C++, SQL, PHP, Javascript, Node.js, CSS, HTML, Prolog, Haskell 
-Frameworks - React, Express
-Tools - AWS, Docker, Git, CUDA, Ansible, Terraform, Bash, Powershell
+Frameworks - React, Express, Tensorflow, Tensorflow lite
+Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powershell
 `
     }),
 
@@ -119,6 +125,7 @@ Tools - AWS, Docker, Git, CUDA, Ansible, Terraform, Bash, Powershell
 ╚═══════════════════════════════════════╝
 
 Email:    valdez.gabe@hotmail.com
+Phome:    (808)446-6022
 
 Feel free to reach out for opportunities or collaborations!
 `
