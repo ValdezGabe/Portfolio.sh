@@ -1,11 +1,32 @@
 import { useState, useEffect, useRef } from 'react';
 import './Terminal.css';
 
+// Typing animation component
+const TypingText = ({ text, speed = 15 }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  return <pre>{displayedText}</pre>;
+};
+
 const Terminal = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([]);
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [typingEnabled, setTypingEnabled] = useState(true);
+  const [formMode, setFormMode] = useState(null);
+  const [formData, setFormData] = useState({});
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
@@ -51,12 +72,30 @@ Available commands:
 
   help          Show this help message
   about         Learn more about me
+  education     View my education background
+  experience    See my work experience
   projects      View my projects
   skills        See my technical skills
   contact       Get my contact information
   social        View my social media links
+  resume        Download my resume
+  sendmessage   Send me a message (Netlify Forms)
   clear         Clear the terminal
   start         Display the welcome banner
+  typing        Toggle typing animation
+
+Unix commands:
+  ls            List directory contents
+  pwd           Print working directory
+  whoami        Display current user
+  echo [text]   Display a line of text
+  date          Display current date and time
+  exit/quit     Exit message
+
+Easter eggs:
+  Try: sudo, hack, matrix 🎮
+
+Tip: Use Tab for autocomplete, ↑↓ arrows for command history
 
   `
     }),
@@ -76,6 +115,54 @@ I have a strong foundation in networking, system administration, and problem-sol
 `
     }),
 
+    education: () => ({
+      type: 'output',
+      content: `
+╔═══════════════════════════════════════╗
+║             EDUCATION                 ║
+╚═══════════════════════════════════════╝
+
+Oregon State University
+B.S. Computer Science | Minor in Business Information Systems
+Focus: Cybersecurity
+Expected Graduation: [Year]
+
+Relevant Coursework:
+• Network Security & Administration
+• System Administration
+• Data Structures & Algorithms
+• Database Management
+• Software Engineering
+
+Certifications:
+• CompTIA A+
+• CompTIA Network+
+• CompTIA Security+
+`
+    }),
+
+    experience: () => ({
+      type: 'output',
+      content: `
+╔═══════════════════════════════════════╗
+║           WORK EXPERIENCE             ║
+╚═══════════════════════════════════════╝
+
+Looking for opportunities!
+Currently seeking internship positions in:
+• Cybersecurity
+• IT/System Administration
+• Data Analysis
+• Software Development
+
+Skills I bring:
+• Network security & administration
+• System troubleshooting & support
+• Python, C/C++, SQL programming
+• Cloud infrastructure (AWS)
+• DevOps tools (Docker, Terraform)
+`
+    }),
     projects: () => ({
       type: 'output',
       content: `
@@ -114,6 +201,7 @@ Certifications - CompTIA A+, CompTIA Network+, CompTIA Security+
 Languages - Python, C, C++, SQL, PHP, Javascript, Node.js, CSS, HTML, Prolog, Haskell 
 Frameworks - React, Express, Tensorflow, Tensorflow lite
 Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powershell
+
 `
     }),
 
@@ -151,31 +239,218 @@ GitHub:   https://github.com/ValdezGabe
     start: () => ({
       type: 'output',
       content: start
-    })
+    }),
+
+    resume: () => {
+      // Trigger resume download
+      const link = document.createElement('a');
+      link.href = '/resume.pdf';
+      link.download = 'Gabe_Valdez_Resume.pdf';
+      link.click();
+      return {
+        type: 'output',
+        content: 'Downloading resume...\nIf download doesn\'t start, the resume file may not be available yet.'
+      };
+    },
+
+    // Easter egg commands
+    sudo: () => ({
+      type: 'error',
+      content: 'Nice try! But you don\'t need sudo permissions to view my portfolio. 😎'
+    }),
+
+    hack: () => ({
+      type: 'output',
+      content: `
+Initiating hack sequence...
+[▓▓▓▓▓▓▓▓▓▓] 100%
+Access granted!
+Just kidding 😄 I'm a cybersecurity student, not a hacker.
+Check out my projects instead!
+`
+    }),
+
+    matrix: () => ({
+      type: 'output',
+      content: `
+Wake up, Neo...
+The Matrix has you...
+Follow the white rabbit.
+
+Knock, knock, Neo.
+
+Just kidding! Type 'projects' to see my real work. 🐰
+`
+    }),
+
+    whoami: () => ({
+      type: 'output',
+      content: 'gabe-valdez\nType "about" for more information about me.'
+    }),
+
+    ls: () => ({
+      type: 'output',
+      content: `
+about/          education/      experience/     projects/
+skills/         contact/        social/         resume.pdf
+
+Type 'help' to see all available commands.
+`
+    }),
+
+    pwd: () => ({
+      type: 'output',
+      content: '/home/gabe-valdez/portfolio'
+    }),
+
+    echo: (args) => ({
+      type: 'output',
+      content: args || ''
+    }),
+
+    date: () => ({
+      type: 'output',
+      content: new Date().toString()
+    }),
+
+    typing: () => {
+      setTypingEnabled(!typingEnabled);
+      return {
+        type: 'output',
+        content: `Typing animation ${!typingEnabled ? 'enabled' : 'disabled'}.`
+      };
+    },
+
+    sendmessage: () => {
+      setFormMode('name');
+      setFormData({});
+      return {
+        type: 'output',
+        content: 'Let\'s get in touch! I\'ll need a few details.\n\nWhat\'s your name?'
+      };
+    },
+
+    // Command aliases
+    '?': function() { return this.help(); },
+    info: function() { return this.about(); },
+    cls: function() { return this.clear(); },
+    exit: () => ({
+      type: 'output',
+      content: 'Thanks for visiting! To exit, just close this tab. 👋'
+    }),
+    quit: function() { return this.exit(); }
   };
 
   const handleCommand = (cmd) => {
-    const trimmedCmd = cmd.trim().toLowerCase();
+    const trimmedCmd = cmd.trim();
 
     // Add command to history
-    setHistory(prev => [...prev, { type: 'input', content: `$ ${cmd}` }]);
+    setHistory(prev => [...prev, { type: 'input', content: formMode ? `> ${cmd}` : `$ ${cmd}` }]);
 
     if (!trimmedCmd) return;
 
-    // Add to command history
-    setCommandHistory(prev => [...prev, cmd]);
-    setHistoryIndex(-1);
+    // Add to command history (only for non-form inputs)
+    if (!formMode) {
+      setCommandHistory(prev => [...prev, cmd]);
+      setHistoryIndex(-1);
+    }
+
+    // Handle form mode
+    if (formMode) {
+      const newFormData = { ...formData };
+
+      if (formMode === 'name') {
+        newFormData.name = trimmedCmd;
+        setFormData(newFormData);
+        setFormMode('email');
+        setHistory(prev => [...prev, {
+          type: 'output',
+          content: `Nice to meet you, ${trimmedCmd}!\n\nWhat's your email address?`
+        }]);
+        return;
+      }
+
+      if (formMode === 'email') {
+        // Basic email validation
+        if (!trimmedCmd.includes('@')) {
+          setHistory(prev => [...prev, {
+            type: 'error',
+            content: 'Please enter a valid email address:'
+          }]);
+          return;
+        }
+        newFormData.email = trimmedCmd;
+        setFormData(newFormData);
+        setFormMode('message');
+        setHistory(prev => [...prev, {
+          type: 'output',
+          content: 'Great! Now, what\'s your message?'
+        }]);
+        return;
+      }
+
+      if (formMode === 'message') {
+        newFormData.message = trimmedCmd;
+        setFormData(newFormData);
+        setFormMode(null);
+
+        // Submit to Netlify
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            'form-name': 'contact',
+            ...newFormData
+          }).toString()
+        })
+          .then(() => {
+            setHistory(prev => [...prev, {
+              type: 'output',
+              content: `✓ Message sent successfully!\n\nThanks ${newFormData.name}, I'll get back to you at ${newFormData.email} soon!`
+            }]);
+          })
+          .catch(() => {
+            setHistory(prev => [...prev, {
+              type: 'error',
+              content: 'Failed to send message. Please try emailing me directly at valdez.gabe@hotmail.com'
+            }]);
+          });
+        return;
+      }
+    }
+
+    const lowerCmd = trimmedCmd.toLowerCase();
+
+    // Handle echo command specially to pass arguments
+    if (lowerCmd.startsWith('echo ')) {
+      const args = cmd.substring(5);
+      const result = commands.echo(args);
+      if (result) {
+        setHistory(prev => [...prev, result]);
+      }
+      return;
+    }
 
     // Execute command
-    if (commands[trimmedCmd]) {
-      const result = commands[trimmedCmd]();
+    if (commands[lowerCmd]) {
+      const result = commands[lowerCmd]();
       if (result) {
         setHistory(prev => [...prev, result]);
       }
     } else {
+      // Command not found - suggest similar commands
+      const suggestions = findSimilarCommands(lowerCmd);
+      let errorMessage = `Command not found: ${lowerCmd}`;
+
+      if (suggestions.length > 0) {
+        errorMessage += `\n\nDid you mean: ${suggestions.join(', ')}?`;
+      }
+
+      errorMessage += `\n\nType 'help' for available commands.`;
+
       setHistory(prev => [...prev, {
         type: 'error',
-        content: `Command not found: ${trimmedCmd}\nType 'help' for available commands.`
+        content: errorMessage
       }]);
     }
   };
@@ -186,7 +461,41 @@ GitHub:   https://github.com/ValdezGabe
     setInput('');
   };
 
+  // Get all available command names (including aliases)
+  const getAllCommandNames = () => {
+    return Object.keys(commands);
+  };
+
+  // Find command suggestions based on similarity
+  const findSimilarCommands = (cmd) => {
+    const allCommands = getAllCommandNames();
+    return allCommands.filter(command => {
+      // Simple similarity check - starts with same letter or contains substring
+      return command.startsWith(cmd.charAt(0)) || command.includes(cmd) || cmd.includes(command);
+    }).slice(0, 3);
+  };
+
   const handleKeyDown = (e) => {
+    // Handle Tab - autocomplete
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const trimmedInput = input.trim().toLowerCase();
+      if (trimmedInput) {
+        const matchingCommands = getAllCommandNames().filter(cmd =>
+          cmd.startsWith(trimmedInput)
+        );
+        if (matchingCommands.length === 1) {
+          setInput(matchingCommands[0]);
+        } else if (matchingCommands.length > 1) {
+          // Show all matching commands
+          setHistory(prev => [...prev, {
+            type: 'output',
+            content: matchingCommands.join('  ')
+          }]);
+        }
+      }
+    }
+
     // Handle up arrow - previous command
     if (e.key === 'ArrowUp') {
       e.preventDefault();
@@ -227,12 +536,16 @@ GitHub:   https://github.com/ValdezGabe
       <div className="terminal-body" ref={terminalRef}>
         {history.map((item, index) => (
           <div key={index} className={`terminal-line ${item.type}`}>
-            <pre>{item.content}</pre>
+            {item.type === 'input' || !typingEnabled || item.type === 'error' || index < history.length - 1 ? (
+              <pre>{item.content}</pre>
+            ) : (
+              <TypingText text={item.content} speed={5} />
+            )}
           </div>
         ))}
 
         <form onSubmit={handleSubmit} className="terminal-input-line">
-          <span className="terminal-prompt">$</span>
+          <span className="terminal-prompt">{formMode ? '>' : '$'}</span>
           <input
             ref={inputRef}
             type="text"
