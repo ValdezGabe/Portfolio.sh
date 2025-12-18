@@ -48,7 +48,7 @@ Type 'help' to see available commands.
   // Initialize terminal with welcome message
   useEffect(() => {
     setHistory([
-      { type: 'output', content: start }
+      { type: 'banner', content: start }
     ]);
   }, []);
 
@@ -125,7 +125,8 @@ I have a strong foundation in networking, system administration, and problem-sol
 Oregon State University
 B.S. Computer Science | Minor in Business Information Systems
 Focus: Cybersecurity
-Expected Graduation: [Year]
+Expected Graduation: June 2027
+GPA: 3.42
 
 Relevant Coursework:
 • Network Security & Administration
@@ -136,8 +137,8 @@ Relevant Coursework:
 
 Certifications:
 • CompTIA A+
-• CompTIA Network+
-• CompTIA Security+
+• CompTIA Network+ (In Progress)
+• CompTIA Security+ (In Progress)
 `
     }),
 
@@ -237,7 +238,7 @@ GitHub:   https://github.com/ValdezGabe
     },
 
     start: () => ({
-      type: 'output',
+      type: 'banner',
       content: start
     }),
 
@@ -536,7 +537,18 @@ Type 'help' to see all available commands.
       <div className="terminal-body" ref={terminalRef}>
         {history.map((item, index) => (
           <div key={index} className={`terminal-line ${item.type}`}>
-            {item.type === 'input' || !typingEnabled || item.type === 'error' || index < history.length - 1 ? (
+            {item.type === 'banner' ? (
+              <div className="banner-container">
+                <div className="banner-content">
+                  <div className="profile-section">
+                    <img src={profileImg} alt="Gabe Valdez" className="profile-image" />
+                  </div>
+                  <div className="ascii-section">
+                    <pre>{item.content}</pre>
+                  </div>
+                </div>
+              </div>
+            ) : item.type === 'input' || !typingEnabled || item.type === 'error' || index < history.length - 1 ? (
               <pre>{item.content}</pre>
             ) : (
               <TypingText text={item.content} speed={5} />
