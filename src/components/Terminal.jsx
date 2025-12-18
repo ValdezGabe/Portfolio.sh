@@ -94,6 +94,7 @@ Available commands:
   resume        Download my resume
   msg           Send me a message
   clear         Clear the terminal
+  exit          Close the terminal
 
 Tip: Use Tab for autocomplete, ↑↓ arrows for command history
 
@@ -355,6 +356,15 @@ GitHub:   https://github.com/ValdezGabe
       return {
         type: 'output',
         content: 'Let\'s get in touch! I\'ll need a few details.\n\nWhat\'s your name?'
+      };
+    },
+
+    exit: () => {
+      setIsClosing(true);
+      setTimeout(() => setIsClosed(true), 500);
+      return {
+        type: 'output',
+        content: 'Goodbye! Thanks for visiting.'
       };
     },
 
