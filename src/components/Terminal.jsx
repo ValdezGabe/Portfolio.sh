@@ -5,6 +5,8 @@ import './Terminal.css';
 const TypingText = ({ text, speed = 15 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+  const isTyping = currentIndex < text.length;
 
   useEffect(() => {
     if (currentIndex < text.length) {
@@ -16,7 +18,17 @@ const TypingText = ({ text, speed = 15 }) => {
     }
   }, [currentIndex, text, speed]);
 
-  return <pre>{displayedText}</pre>;
+  // Blinking cursor effect
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <pre>{displayedText}{isTyping && <span className="typing-cursor">{showCursor ? '_' : '\u00A0'}</span>}</pre>
+  );
 };
 
 const Terminal = () => {
@@ -24,31 +36,31 @@ const Terminal = () => {
   const [history, setHistory] = useState([]);
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [typingEnabled, setTypingEnabled] = useState(true);
   const [formMode, setFormMode] = useState(null);
   const [formData, setFormData] = useState({});
+  const [isClosing, setIsClosing] = useState(false);
+  const [isClosed, setIsClosed] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
-  // ASCII Art Banner
-  const start = `
-                                                                                     
+  // ASCII Art Banner (title only)
+  const asciiTitle = `
  ██████╗  █████╗ ██████╗ ███████╗    ██╗   ██╗ █████╗ ██╗     ██████╗ ███████╗███████╗
 ██╔════╝ ██╔══██╗██╔══██╗██╔════╝    ██║   ██║██╔══██╗██║     ██╔══██╗██╔════╝╚══███╔╝
-██║  ███╗███████║██████╔╝█████╗      ██║   ██║███████║██║     ██║  ██║█████╗    ███╔╝ 
-██║   ██║██╔══██║██╔══██╗██╔══╝      ╚██╗ ██╔╝██╔══██║██║     ██║  ██║██╔══╝   ███╔╝  
+██║  ███╗███████║██████╔╝█████╗      ██║   ██║███████║██║     ██║  ██║█████╗    ███╔╝
+██║   ██║██╔══██║██╔══██╗██╔══╝      ╚██╗ ██╔╝██╔══██║██║     ██║  ██║██╔══╝   ███╔╝
 ╚██████╔╝██║  ██║██████╔╝███████╗     ╚████╔╝ ██║  ██║███████╗██████╔╝███████╗███████╗
  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝      ╚═══╝  ╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝╚══════╝
-                                                                                                                                                                                                                                                                                                                                      
-
-Welcome to my interactive portfolio terminal!
-Type 'help' to see available commands.
 `;
+
+  // Welcome text (will be typed out)
+  const welcomeText = `Welcome to my interactive portfolio terminal!
+Type 'help' to see available commands.`;
 
   // Initialize terminal with welcome message
   useEffect(() => {
     setHistory([
-      { type: 'banner', content: start }
+      { type: 'banner', content: asciiTitle, welcomeText: welcomeText }
     ]);
   }, []);
 
@@ -71,6 +83,7 @@ Type 'help' to see available commands.
 Available commands:
 
   help          Show this help message
+  all           View full portfolio
   about         Learn more about me
   education     View my education background
   experience    See my work experience
@@ -79,25 +92,112 @@ Available commands:
   contact       Get my contact information
   social        View my social media links
   resume        Download my resume
-  sendmessage   Send me a message (Netlify Forms)
+  msg           Send me a message
   clear         Clear the terminal
-  start         Display the welcome banner
-  typing        Toggle typing animation
-
-Unix commands:
-  ls            List directory contents
-  pwd           Print working directory
-  whoami        Display current user
-  echo [text]   Display a line of text
-  date          Display current date and time
-  exit/quit     Exit message
-
-Easter eggs:
-  Try: sudo, hack, matrix 🎮
 
 Tip: Use Tab for autocomplete, ↑↓ arrows for command history
 
   `
+    }),
+
+    all: () => ({
+      type: 'output',
+      content: `
+╔═══════════════════════════════════════╗
+║            ABOUT ME                   ║
+╚═══════════════════════════════════════╝
+
+Hi, my name is Gabe Valdez. Im a Computer Science major with a minor in Business Information Systems, focused on cybersecurity at Oregon State University.
+
+I have a strong foundation in networking, system administration, and problem-solving. Im currently seeking internship opportunities in cybersecurity, IT, or data analysis where I can apply my skills and grow as a professional.
+
+"If it's flipping hamburgers at McDonald's, be the best hamburger flipper in the world. Whatever it is you do you have to master your craft." - Snoop Dogg
+
+╔═══════════════════════════════════════╗
+║             EDUCATION                 ║
+╚═══════════════════════════════════════╝
+
+Oregon State University
+B.S. Computer Science | Minor in Business Information Systems
+Focus: Cybersecurity
+Expected Graduation: June 2027
+GPA: 3.42
+
+Relevant Coursework:
+• Network Security & Administration
+• System Administration
+• Data Structures & Algorithms
+• Database Management
+• Software Engineering
+
+Certifications:
+• CompTIA A+
+• CompTIA Network+ (In Progress)
+• CompTIA Security+ (In Progress)
+
+╔═══════════════════════════════════════╗
+║           WORK EXPERIENCE             ║
+╚═══════════════════════════════════════╝
+
+Looking for opportunities!
+Currently seeking internship positions in:
+• Cybersecurity
+• IT/System Administration
+• Data Analysis
+• Software Development
+
+Skills I bring:
+• Network security & administration
+• System troubleshooting & support
+• Python, C/C++, SQL programming
+• Cloud infrastructure (AWS)
+• DevOps tools (Docker, Terraform)
+
+╔═══════════════════════════════════════╗
+║            PROJECTS                   ║
+╚═══════════════════════════════════════╝
+
+DubBetter Ring
+An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition. Using TensorFlow for on-device inference and WebSocket connections for low-latency streaming, the system provides instant event notifications, activity timelines, and a YouTube-style interface for reviewing security events.
+Tech: React, TensorFlow, OpenCV, Raspberry Pi, Socket.io, TailwindCSS
+
+Game Server Automation
+Designed and implemented a fully automated infrastructure-as-code solution for deploying a containerized Minecraft server on AWS. Built using Terraform for infrastructure provisioning and Docker for containerization, the system automatically configures complete AWS networking architecture including VPC, security groups, and EC2 instances.
+Tech: AWS EC2, Docker, Terraform
+
+BrainBurst
+Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design.
+Tech: React, JavaScript, Tailwind CSS, Supabase
+
+Terminal Portfolio
+An interactive terminal-style portfolio
+Tech: React, Javascript
+
+╔═══════════════════════════════════════╗
+║        TECHNICAL SKILLS               ║
+╚═══════════════════════════════════════╝
+
+Certifications - CompTIA A+, CompTIA Network+, CompTIA Security+
+Languages - Python, C, C++, SQL, PHP, Javascript, Node.js, CSS, HTML, Prolog, Haskell
+Frameworks - React, Express, Tensorflow, Tensorflow lite
+Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powershell
+
+╔═══════════════════════════════════════╗
+║          CONTACT INFO                 ║
+╚═══════════════════════════════════════╝
+
+Email:    gabemakanavaldez@gmail.com
+Phone:    (808)446-6022
+
+╔═══════════════════════════════════════╗
+║         SOCIAL LINKS                  ║
+╚═══════════════════════════════════════╝
+
+LinkedIn: https://www.linkedin.com/in/gabemvaldez/
+GitHub:   https://github.com/ValdezGabe
+
+Feel free to reach out for opportunities or collaborations!
+`
     }),
 
     about: () => ({
@@ -213,7 +313,7 @@ Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powersh
 ║          CONTACT INFO                 ║
 ╚═══════════════════════════════════════╝
 
-Email:    valdez.gabe@hotmail.com
+Email:    gabemakanavaldez@gmail.com
 Phone:    (808)446-6022
 
 Feel free to reach out for opportunities or collaborations!
@@ -237,11 +337,6 @@ GitHub:   https://github.com/ValdezGabe
       return null;
     },
 
-    start: () => ({
-      type: 'banner',
-      content: start
-    }),
-
     resume: () => {
       // Trigger resume download
       const link = document.createElement('a');
@@ -254,75 +349,7 @@ GitHub:   https://github.com/ValdezGabe
       };
     },
 
-    // Easter egg commands
-    sudo: () => ({
-      type: 'error',
-      content: 'Nice try! But you don\'t need sudo permissions to view my portfolio. 😎'
-    }),
-
-    hack: () => ({
-      type: 'output',
-      content: `
-Initiating hack sequence...
-[▓▓▓▓▓▓▓▓▓▓] 100%
-Access granted!
-Just kidding 😄 I'm a cybersecurity student, not a hacker.
-Check out my projects instead!
-`
-    }),
-
-    matrix: () => ({
-      type: 'output',
-      content: `
-Wake up, Neo...
-The Matrix has you...
-Follow the white rabbit.
-
-Knock, knock, Neo.
-
-Just kidding! Type 'projects' to see my real work. 🐰
-`
-    }),
-
-    whoami: () => ({
-      type: 'output',
-      content: 'gabe-valdez\nType "about" for more information about me.'
-    }),
-
-    ls: () => ({
-      type: 'output',
-      content: `
-about/          education/      experience/     projects/
-skills/         contact/        social/         resume.pdf
-
-Type 'help' to see all available commands.
-`
-    }),
-
-    pwd: () => ({
-      type: 'output',
-      content: '/home/gabe-valdez/portfolio'
-    }),
-
-    echo: (args) => ({
-      type: 'output',
-      content: args || ''
-    }),
-
-    date: () => ({
-      type: 'output',
-      content: new Date().toString()
-    }),
-
-    typing: () => {
-      setTypingEnabled(!typingEnabled);
-      return {
-        type: 'output',
-        content: `Typing animation ${!typingEnabled ? 'enabled' : 'disabled'}.`
-      };
-    },
-
-    sendmessage: () => {
+    msg: () => {
       setFormMode('name');
       setFormData({});
       return {
@@ -334,12 +361,7 @@ Type 'help' to see all available commands.
     // Command aliases
     '?': function() { return this.help(); },
     info: function() { return this.about(); },
-    cls: function() { return this.clear(); },
-    exit: () => ({
-      type: 'output',
-      content: 'Thanks for visiting! To exit, just close this tab. 👋'
-    }),
-    quit: function() { return this.exit(); }
+    cls: function() { return this.clear(); }
   };
 
   const handleCommand = (cmd) => {
@@ -421,16 +443,6 @@ Type 'help' to see all available commands.
     }
 
     const lowerCmd = trimmedCmd.toLowerCase();
-
-    // Handle echo command specially to pass arguments
-    if (lowerCmd.startsWith('echo ')) {
-      const args = cmd.substring(5);
-      const result = commands.echo(args);
-      if (result) {
-        setHistory(prev => [...prev, result]);
-      }
-      return;
-    }
 
     // Execute command
     if (commands[lowerCmd]) {
@@ -523,11 +535,19 @@ Type 'help' to see all available commands.
     }
   };
 
+  if (isClosed) {
+    return (
+      <div className="terminal-closed">
+        <p>Thanks for visiting! 👋<br/>Refresh the page to restart.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="terminal-container" onClick={() => inputRef.current?.focus()}>
+    <div className={`terminal-container ${isClosing ? 'closing' : ''}`} onClick={() => inputRef.current?.focus()}>
       <div className="terminal-header">
         <div className="terminal-buttons">
-          <span className="terminal-button close"></span>
+          <span className="terminal-button close" onClick={() => { setIsClosing(true); setTimeout(() => setIsClosed(true), 500); }}></span>
           <span className="terminal-button minimize"></span>
           <span className="terminal-button maximize"></span>
         </div>
@@ -538,17 +558,11 @@ Type 'help' to see all available commands.
         {history.map((item, index) => (
           <div key={index} className={`terminal-line ${item.type}`}>
             {item.type === 'banner' ? (
-              <div className="banner-container">
-                <div className="banner-content">
-                  <div className="profile-section">
-                    <img src={profileImg} alt="Gabe Valdez" className="profile-image" />
-                  </div>
-                  <div className="ascii-section">
-                    <pre>{item.content}</pre>
-                  </div>
-                </div>
+              <div className="banner-section">
+                <pre>{item.content}</pre>
+                <TypingText text={item.welcomeText} speed={20} />
               </div>
-            ) : item.type === 'input' || !typingEnabled || item.type === 'error' || index < history.length - 1 ? (
+            ) : item.type === 'input' || item.type === 'error' || index < history.length - 1 ? (
               <pre>{item.content}</pre>
             ) : (
               <TypingText text={item.content} speed={5} />
@@ -558,17 +572,22 @@ Type 'help' to see all available commands.
 
         <form onSubmit={handleSubmit} className="terminal-input-line">
           <span className="terminal-prompt">{formMode ? '>' : '$'}</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="terminal-input"
-            autoFocus
-            spellCheck="false"
-            autoComplete="off"
-          />
+          <div className="input-wrapper">
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="terminal-input"
+              autoFocus
+              spellCheck="false"
+              autoComplete="off"
+            />
+            <span className="input-display">
+              {input}<span className="blink-cursor">_</span>
+            </span>
+          </div>
         </form>
       </div>
     </div>
