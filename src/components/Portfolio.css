@@ -1,0 +1,425 @@
+.portfolio {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.portfolio-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.portfolio-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #00ff00;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* About Section */
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #e0e0e0;
+  margin-bottom: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.quote {
+  font-style: italic;
+  color: #888;
+  border-left: 3px solid #00ff00;
+  padding-left: 1rem;
+  margin-top: 2rem;
+}
+
+/* Skills Section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.skill-category h3 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+/* Education Section */
+.education-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.education-card h3 {
+  color: #00ff00;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.degree {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.focus {
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.education-details {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  color: #aaa;
+}
+
+.coursework h4 {
+  color: #00ff00;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.coursework ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.coursework li {
+  color: #e0e0e0;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.coursework li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: #00ff00;
+}
+
+/* Certifications Section */
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.cert-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.cert-card:hover {
+  border-color: #00ff00;
+  transform: translateY(-2px);
+}
+
+.cert-card.completed {
+  border-color: #00ff00;
+}
+
+.cert-icon {
+  font-size: 1.5rem;
+}
+
+.cert-card.completed .cert-icon {
+  color: #00ff00;
+}
+
+.cert-card.in-progress .cert-icon {
+  color: #ffbd2e;
+}
+
+.cert-name {
+  color: #e0e0e0;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.cert-status {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.cert-card.completed .cert-status {
+  color: #00ff00;
+}
+
+/* Projects Section */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.project-card:hover {
+  border-color: #00ff00;
+  transform: translateY(-2px);
+}
+
+.project-card h3 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.project-description {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.project-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.highlight-tag {
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #2a2a2a;
+}
+
+.tech-tag {
+  background: #252525;
+  color: #aaa;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Experience Section */
+.seeking-text {
+  color: #e0e0e0;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.seeking-areas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.seeking-tag {
+  background: #1a1a1a;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.seeking-tag:hover {
+  background: #00ff00;
+  color: #0a0a0a;
+}
+
+/* Contact Section */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.contact-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.contact-card:hover {
+  border-color: #00ff00;
+  transform: translateY(-2px);
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+  color: #00ff00;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.contact-label {
+  color: #888;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contact-value {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+.resume-button {
+  display: inline-block;
+  background: #00ff00;
+  color: #0a0a0a;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  margin: 0 auto;
+}
+
+.contact-section .section-content {
+  text-align: center;
+}
+
+.resume-button:hover {
+  background: #00cc00;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 255, 0, 0.3);
+}
+
+/* Footer */
+.portfolio-footer {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .portfolio-section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .education-details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio {
+    padding: 0 0.5rem;
+  }
+
+  .portfolio-section {
+    padding: 2rem 0;
+  }
+
+  .section-content {
+    padding: 0 0.5rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
