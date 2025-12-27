@@ -282,6 +282,17 @@
   margin: 0;
 }
 
+/* Responsive ASCII art - show/hide based on screen size */
+.ascii-desktop {
+  display: block;
+  margin: 0;
+}
+
+.ascii-mobile {
+  display: none;
+  margin: 0;
+}
+
 /* Mobile adjustments for banner */
 @media (max-width: 768px) {
   .banner-content {
@@ -302,6 +313,16 @@
     font-size: 0.6rem;
     overflow-x: auto;
   }
+
+  /* Swap ASCII art for tablet */
+  .ascii-desktop {
+    display: none;
+  }
+
+  .ascii-mobile {
+    display: block;
+    font-size: 0.55rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -317,6 +338,11 @@
 
   .ascii-section pre {
     font-size: 0.45rem;
+  }
+
+  /* Keep mobile ASCII visible with adjusted size */
+  .ascii-mobile {
+    font-size: 0.5rem;
   }
 }
 

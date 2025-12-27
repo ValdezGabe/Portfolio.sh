@@ -43,14 +43,24 @@ const Terminal = () => {
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
-  // ASCII Art Banner (title only)
-  const asciiTitle = `
+  // ASCII Art Banner - Desktop (full name)
+  const asciiTitleDesktop = `
  ██████╗  █████╗ ██████╗ ███████╗    ██╗   ██╗ █████╗ ██╗     ██████╗ ███████╗███████╗
 ██╔════╝ ██╔══██╗██╔══██╗██╔════╝    ██║   ██║██╔══██╗██║     ██╔══██╗██╔════╝╚══███╔╝
 ██║  ███╗███████║██████╔╝█████╗      ██║   ██║███████║██║     ██║  ██║█████╗    ███╔╝
 ██║   ██║██╔══██║██╔══██╗██╔══╝      ╚██╗ ██╔╝██╔══██║██║     ██║  ██║██╔══╝   ███╔╝
 ╚██████╔╝██║  ██║██████╔╝███████╗     ╚████╔╝ ██║  ██║███████╗██████╔╝███████╗███████╗
  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝      ╚═══╝  ╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝╚══════╝
+`;
+
+  // ASCII Art Banner - Mobile (first name only, fits better)
+  const asciiTitleMobile = `
+ ██████╗  █████╗ ██████╗ ███████╗
+██╔════╝ ██╔══██╗██╔══██╗██╔════╝
+██║  ███╗███████║██████╔╝█████╗
+██║   ██║██╔══██║██╔══██╗██╔══╝
+╚██████╔╝██║  ██║██████╔╝███████╗
+ ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝
 `;
 
   // Welcome text (will be typed out)
@@ -60,7 +70,7 @@ Type 'help' to see available commands.`;
   // Initialize terminal with welcome message
   useEffect(() => {
     setHistory([
-      { type: 'banner', content: asciiTitle, welcomeText: welcomeText }
+      { type: 'banner', contentDesktop: asciiTitleDesktop, contentMobile: asciiTitleMobile, welcomeText: welcomeText }
     ]);
   }, []);
 
@@ -569,7 +579,8 @@ GitHub:   https://github.com/ValdezGabe
           <div key={index} className={`terminal-line ${item.type}`}>
             {item.type === 'banner' ? (
               <div className="banner-section">
-                <pre>{item.content}</pre>
+                <pre className="ascii-desktop">{item.contentDesktop}</pre>
+                <pre className="ascii-mobile">{item.contentMobile}</pre>
                 <TypingText text={item.welcomeText} speed={20} />
               </div>
             ) : item.type === 'input' || item.type === 'error' || index < history.length - 1 ? (
