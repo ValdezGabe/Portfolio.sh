@@ -28,6 +28,7 @@ export const education = {
     "Computer Networks",
     "System Administration",
     "Project Management",
+    "Parallel Programming",
     "Web Development",
     "Usability Engineering",
     "Database Management",
