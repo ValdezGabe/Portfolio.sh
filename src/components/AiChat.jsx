@@ -69,7 +69,7 @@ export default function AiChat() {
   return (
     <div className="chat-panel">
       <div className="chat-header">
-        <span className="chat-header-title">{'>'} ai-assistant</span>
+        <span className="chat-header-title">{'>'} GabeAI</span>
         <button className="chat-close" onClick={() => setOpen(false)} aria-label="Close chat">
           ✕
         </button>
