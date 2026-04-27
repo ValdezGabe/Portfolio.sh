@@ -1,5 +1,6 @@
 import Terminal from './components/Terminal'
 import Portfolio from './components/Portfolio'
+import AiChat from './components/AiChat'
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <section className="portfolio-section-wrapper">
         <Portfolio />
       </section>
+      <AiChat />
     </div>
   )
 }

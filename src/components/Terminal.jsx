@@ -132,7 +132,7 @@ Oregon State University
 B.S. Computer Science | Minor in Business Information Systems
 Focus: Cybersecurity
 Expected Graduation: June 2027
-GPA: 3.42
+GPA: 3.45
 
 Relevant Coursework:
 • Network Security & Administration
@@ -143,6 +143,7 @@ Relevant Coursework:
 
 Certifications:
 • CompTIA A+
+• Azure AZ-900 
 • CompTIA Network+ (In Progress)
 • CompTIA Security+ (In Progress)
 
@@ -152,10 +153,11 @@ Certifications:
 
 Looking for opportunities!
 Currently seeking internship positions in:
-• Cybersecurity
+• Information Security
+• SOC Analyst
+• Security Engineering
 • IT/System Administration
-• Data Analysis
-• Software Development
+
 
 Skills I bring:
 • Network security & administration

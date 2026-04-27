@@ -18,7 +18,7 @@ export const education = {
   minor: "Minor in Business Information Systems",
   focus: "Cybersecurity",
   graduation: "June 2027",
-  gpa: "3.42",
+  gpa: "3.45",
   coursework: [
     "Data Structures",
     "Algorithms",
@@ -32,15 +32,17 @@ export const education = {
     "Web Development",
     "Usability Engineering",
     "Database Management",
-    "Software Engineering"
+    "Software Engineering",
+    "Network Security",
+    "Digital Forensics"
   ]
 };
 
 export const certifications = [
   { name: "CompTIA A+", status: "completed" },
+    { name: "Azure AZ-900", status: "completed"},
   { name: "CompTIA Network+", status: "in-progress" },
-  { name: "CompTIA Security+", status: "in-progress" },
-  { name: "Azure AZ-900", status: "in-progress"}
+  { name: "CompTIA Security+", status: "in-progress" }
 ];
 
 export const skills = {
