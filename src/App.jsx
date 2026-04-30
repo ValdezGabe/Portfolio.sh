@@ -12,7 +12,7 @@ function App() {
       <section className="portfolio-section-wrapper">
         <Portfolio />
       </section>
-      <AiChat />
+      {/* <AiChat />*/}
     </div>
   )
 }
