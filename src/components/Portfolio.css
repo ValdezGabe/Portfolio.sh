@@ -47,16 +47,92 @@
 }
 
 /* Skills Section */
-.skills-grid {
+.core-skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
-.skill-category h3 {
+.core-skill-card {
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.core-skill-card:hover {
+  transform: translateY(-3px);
+}
+
+.core-skill-card:hover .core-skill-icon {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 0, 0.45));
+}
+
+.core-skill-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  transition: filter 0.2s ease;
+}
+
+.core-skill-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.core-skill-name {
+  color: #e0e0e0;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+}
+
+.core-skill-years {
   color: #00ff00;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+}
+
+.core-skill-bar {
+  width: 70%;
+  height: 3px;
+  background: #1f1f1f;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.core-skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff00, #00cc00);
+  transition: width 0.4s ease;
+}
+
+.additional-skills-title {
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.additional-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-category h3,
+.skill-category h4 {
+  color: #00ff00;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
   font-family: 'Courier New', monospace;
 }
 
@@ -72,7 +148,7 @@
   color: #e0e0e0;
   padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-family: 'Courier New', monospace;
   transition: all 0.2s ease;
 }
@@ -81,6 +157,305 @@
   border-color: #00ff00;
   color: #00ff00;
 }
+
+/* Experience / Timeline */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: #2a2a2a;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -2rem;
+  top: 0.5rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #0a0a0a;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+}
+
+.timeline-item.upcoming .timeline-marker {
+  border-color: #ffbd2e;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.5);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255, 189, 46, 0.4); }
+  50% { box-shadow: 0 0 14px rgba(255, 189, 46, 0.8); }
+}
+
+.timeline-content {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.timeline-content:hover {
+  border-color: #00ff00;
+}
+
+.timeline-item.upcoming .timeline-content {
+  border-color: #ffbd2e;
+}
+
+.timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.job-title {
+  color: #00ff00;
+  font-size: 1.15rem;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.upcoming-badge {
+  background: #ffbd2e;
+  color: #0a0a0a;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+}
+
+.job-period {
+  color: #888;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+}
+
+.job-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.job-company {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+}
+
+.job-location {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.job-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.job-bullets li {
+  color: #ccc;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  padding-left: 1.25rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+.job-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #00ff00;
+}
+
+/* Roadmap Tree */
+.roadmap-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-item.completed { color: #00ff00; }
+.legend-item.in-progress { color: #ffbd2e; }
+.legend-item.planned { color: #888; }
+
+/* Cert git-graph */
+.cert-graph {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.cert-graph-branches {
+  position: relative;
+  height: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.cert-branch-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #00ff00;
+  white-space: nowrap;
+}
+
+.cert-graph-canvas {
+  position: relative;
+  width: 100%;
+}
+
+.cert-graph-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.cert-edge {
+  fill: none;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+}
+
+.cert-edge.completed   { stroke: #00ff00; }
+.cert-edge.in-progress { stroke: #ffbd2e; }
+.cert-edge.planned     { stroke: #444; stroke-dasharray: 5 5; }
+
+.cert-edge.merge.planned     { stroke: #555; }
+.cert-edge.merge.in-progress { stroke: #ffbd2e; }
+.cert-edge.merge.completed   { stroke: #00ff00; }
+
+.cert-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  z-index: 2;
+  width: 160px;
+  text-align: center;
+}
+
+.cert-node-marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 2px solid;
+  background: #0a0a0a;
+}
+
+.cert-node.completed   .cert-node-marker { border-color: #00ff00; color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
+.cert-node.in-progress .cert-node-marker { border-color: #ffbd2e; color: #ffbd2e; box-shadow: 0 0 10px rgba(255, 189, 46, 0.5); }
+.cert-node.planned     .cert-node-marker { border-color: #555; color: #888; }
+
+.cert-node.capstone .cert-node-marker {
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  border-width: 3px;
+}
+
+.cert-node.capstone.completed .cert-node-marker {
+  box-shadow: 0 0 16px rgba(0, 255, 0, 0.7);
+  animation: capstone-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes capstone-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(0, 255, 0, 0.5); }
+  50%      { box-shadow: 0 0 22px rgba(0, 255, 0, 0.9); }
+}
+
+.cert-node-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  line-height: 1.2;
+  background: #111;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+}
+
+.cert-node-name {
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.cert-node.planned .cert-node-name { color: #aaa; }
+
+.cert-node.capstone .cert-node-name {
+  color: #00ff00;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.cert-node-status {
+  font-size: 0.7rem;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cert-node.completed   .cert-node-status { color: #00ff00; }
+.cert-node.in-progress .cert-node-status { color: #ffbd2e; }
+.cert-node.planned     .cert-node-status { color: #666; }
 
 /* Education Section */
 .education-card {
@@ -396,6 +771,15 @@
   .contact-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 600px) {
+  .cert-node {
+    width: 92px;
+  }
+  .cert-node-name { font-size: 0.7rem; }
+  .cert-node-status { font-size: 0.6rem; }
+  .cert-branch-label { font-size: 0.7rem; letter-spacing: 0.5px; }
 }
 
 @media (max-width: 480px) {

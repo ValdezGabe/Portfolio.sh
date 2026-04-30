@@ -1,3 +1,5 @@
+import awsLogo from '../assets/icons8-aws-logo-48.png';
+
 export const personalInfo = {
   name: "Gabe Valdez",
   title: "Computer Science Student | Cybersecurity Focus",
@@ -10,7 +12,7 @@ export const personalInfo = {
 
 export const about = `Hi, my name is Gabe Valdez. I'm a Computer Science major with a minor in Business Information Systems, focused on cybersecurity at Oregon State University.
 
-I have a strong foundation in networking, system administration, and problem-solving. I'm currently seeking internship opportunities in cybersecurity, IT, or data analysis where I can apply my skills and grow as a professional.`;
+I work across cybersecurity, DevOps/SecOps, and cloud engineering — building detection logic, automating infrastructure with Terraform/Ansible, and migrating workloads to Azure/AWS. Currently a Cybersecurity Student Analyst at ORTSOC and an incoming InfoSec Intern at Concora Credit.`;
 
 export const education = {
   school: "Oregon State University",
@@ -38,19 +40,150 @@ export const education = {
   ]
 };
 
-export const certifications = [
-  { name: "CompTIA A+", status: "completed" },
-    { name: "Azure AZ-900", status: "completed"},
-  { name: "CompTIA Network+", status: "in-progress" },
-  { name: "CompTIA Security+", status: "in-progress" }
+export const experience = [
+  {
+    title: "Information Security Intern",
+    company: "Concora Credit",
+    location: "Beaverton, OR",
+    period: "Jun 2026 -- Aug 2026",
+    upcoming: true,
+    bullets: [
+      "Analyze hygiene of a multi-thousand-directory environment, surfacing stale permissions and access risks",
+      "Optimize and automate manual security workflows to reduce response time and analyst toil",
+      "Migrate on-premise systems to Azure cloud, hardening identity, networking, and access controls during cutover"
+    ]
+  },
+  {
+    title: "Cybersecurity Student Analyst",
+    company: "ORTSOC — The Nation's First Cybersecurity Teaching Hospital™",
+    location: "Corvallis, OR",
+    period: "Sep 2025 -- Present",
+    bullets: [
+      "Triage 10,000+ weekly security alerts in Elastic SIEM, authoring KQL detection rules and correlation dashboards that map IOCs to adversary TTPs across the MITRE ATT&CK kill chain",
+      "Hunt advanced threats across 1M+ endpoints using Zeek and Suricata, identifying C2 beaconing, DNS tunneling, and lateral movement; tuned detection logic cut false positives by 30%",
+      "Execute penetration tests and vulnerability assessments for real-world clients using Metasploit, Nmap, and Burp Suite, scoped to OWASP Top 10 and NIST 800-115 methodologies",
+      "Lead incident response cases per NIST 800-61: disk/memory forensics, chain-of-custody documentation, and remediation reports for stakeholders",
+      "Conduct GRC gap analyses mapped to NIST CSF 2.0, NIST 800-53, and CIS Controls, producing risk register updates and control recommendations"
+    ]
+  },
+  {
+    title: "Undergraduate Learning Assistant — System Administration",
+    company: "Oregon State University",
+    location: "Corvallis, OR",
+    period: "Mar 2026 -- Present",
+    bullets: [
+      "Guide 150+ students through Terraform-based AWS labs covering EC2, VPC, security groups, NACLs, IAM roles, and CloudFormation, reinforcing IaC and cloud networking fundamentals",
+      "Mentor on Ansible playbook design, Linux hardening (CIS Benchmarks), user/group administration, and automated patching across heterogeneous fleets",
+      "Support coursework on OS installation, dynamic routing, identity management, Docker containerization, and CI/CD fundamentals across a 10-week curriculum"
+    ]
+  },
+  {
+    title: "IT Technician",
+    company: "Oregon State University",
+    location: "Corvallis, OR",
+    period: "Jul 2025 -- Present",
+    bullets: [
+      "Triage and resolve ServiceNow tickets using PowerShell and Bash automation, reducing manual resolution time by 40% with a 98%+ first-contact resolution rate",
+      "Administer 10,000+ Active Directory accounts, group policies, and 3,500+ DNS/DHCP configurations; enforce least-privilege access controls and monitor for unauthorized privilege escalation"
+    ]
+  }
 ];
 
-export const skills = {
-  languages: ["Python", "C", "C++", "SQL", "PHP", "JavaScript", "Node.js", "CSS", "HTML", "Prolog", "Haskell"],
-  frameworks: ["React", "Express", "TensorFlow", "TensorFlow Lite"],
-  tools: ["AWS", "Docker", "NumPy", "OpenCV", "Git", "CUDA", "Ansible", "Terraform", "Bash", "PowerShell"],
-  security: ["Wireshark", "ELK Stack", "Elasticsearch", "Kibana", "Logstash"],
-  systems: ["Linux", "Kali Linux", "Ubuntu", "Alma Linux", "Active Directory", "VMware", "VirtualBox", "TCP/IP"]
+// Primary visual skill cards — icon slugs use simpleicons.org CDN.
+export const coreSkills = [
+  { name: "Python",     years: 4, icon: "python",             color: "3776AB" },
+  { name: "Bash",       years: 4, icon: "gnubash",            color: "4EAA25" },
+  { name: "PowerShell", years: 4, icon: "powershell",          color: "5391FE" },
+  { name: "Wireshark",  years: 3, icon: "wireshark",          color: "1679A7" },
+  { name: "Linux",      years: 3, icon: "linux",              color: "FCC624" },
+  { name: "Git",        years: 3, icon: "git",                color: "F05032" },
+  { name: "C",          years: 3, icon: "c",                  color: "A8B9CC" },
+  { name: "React",      years: 3, icon: "react",              color: "61DAFB" },
+  { name: "AWS",        years: 2, icon: "amazonwebservices",  color: "FF9900", iconSrc: awsLogo },
+  { name: "Docker",     years: 2, icon: "docker",             color: "2496ED" },
+  { name: "Terraform",  years: 2, icon: "terraform",          color: "7B42BC" },
+  { name: "C++",        years: 2, icon: "cplusplus",          color: "00599C" },
+  { name: "SQL",        years: 2, icon: "mysql",              color: "4479A1" }
+];
+
+export const additionalSkills = {
+  "Security & Forensics": [
+    "Elastic SIEM / KQL",
+    "Zeek",
+    "Suricata",
+    "Metasploit",
+    "Nmap",
+    "Burp Suite",
+    "ELK Stack",
+    "MITRE ATT&CK",
+    "NIST 800-61",
+    "NIST 800-53",
+    "NIST CSF 2.0",
+    "CIS Controls",
+    "OWASP Top 10"
+  ],
+  "Cloud & Infrastructure": [
+    "Azure",
+    "Ansible",
+    "CloudFormation",
+    "EC2 / VPC / IAM",
+    "Active Directory",
+    "DNS / DHCP",
+    "ServiceNow"
+  ],
+  "Systems & Networking": [
+    "TCP/IP",
+    "Kali Linux",
+    "Ubuntu",
+    "Alma Linux",
+    "VMware",
+    "VirtualBox",
+    "PowerShell"
+  ],
+  "Other Languages & Libs": [
+    "JavaScript",
+    "Node.js",
+    "HTML",
+    "CSS"
+  ]
+};
+
+// Git-graph layout: 3 branches converge into CISSP.
+// col = branch lane (0=Cyber, 1=Cloud, 2=DevOps), row = vertical position.
+export const certGraph = {
+  branches: [
+    { id: 'cyber',  label: 'Cybersecurity',   col: 0 },
+    { id: 'cloud',  label: 'Cloud',           col: 1 },
+    { id: 'devops', label: 'DevOps / SecOps', col: 2 }
+  ],
+  nodes: [
+    { id: 'aplus',   name: 'CompTIA A+',          status: 'completed',   col: 0, row: 0 },
+    { id: 'netplus', name: 'CompTIA Network+',    status: 'in-progress', col: 0, row: 1 },
+    { id: 'secplus', name: 'CompTIA Security+',   status: 'in-progress', col: 0, row: 2 },
+    { id: 'sc200',   name: 'Microsoft SC-200',    status: 'in-progress',     col: 0, row: 3 },
+
+    { id: 'az900',   name: 'Azure AZ-900',        status: 'completed',   col: 1, row: 0 },
+    { id: 'az104',   name: 'Azure AZ-104',        status: 'planned',     col: 1, row: 1 },
+    { id: 'az500',   name: 'Azure AZ-500',        status: 'planned',     col: 1, row: 2 },
+
+    { id: 'tf',      name: 'Terraform Associate', status: 'planned',     col: 2, row: 0 },
+    { id: 'cka',     name: 'CKA',                 status: 'planned',     col: 2, row: 1 },
+
+    { id: 'cissp',   name: 'CISSP',        status: 'planned',     col: 1, row: 4, capstone: true }
+  ],
+  edges: [
+    { from: 'aplus',   to: 'netplus' },
+    { from: 'netplus', to: 'secplus' },
+    { from: 'secplus', to: 'sc200' },
+    { from: 'sc200',   to: 'cissp' },
+
+    { from: 'az900',   to: 'az104' },
+    { from: 'az104',   to: 'az500' },
+    { from: 'az500',   to: 'cissp' },
+
+    { from: 'tf',      to: 'cka' },
+    { from: 'cka',     to: 'cissp' }
+  ]
 };
 
 export const projects = [
@@ -88,9 +221,8 @@ export const projects = [
 
 export const seeking = [
   "Cybersecurity",
-  "Cloud Security",
+  "Cloud Engineering & Security",
+  "DevOps / SecOps",
   "Network Engineering",
-  "IT/System Administration",
-  "Governance, Risk, and Compliance",
-  "Software Development"
+  "Governance, Risk & Compliance"
 ];
