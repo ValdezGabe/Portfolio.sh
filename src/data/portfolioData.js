@@ -1,4 +1,5 @@
 import awsLogo from '../assets/icons8-aws-logo-48.png';
+import powershellLogo from '../assets/Powershell.svg';
 
 export const personalInfo = {
   name: "Gabe Valdez",
@@ -93,7 +94,7 @@ export const experience = [
 export const coreSkills = [
   { name: "Python",     years: 4, icon: "python",             color: "3776AB" },
   { name: "Bash",       years: 4, icon: "gnubash",            color: "4EAA25" },
-  { name: "PowerShell", years: 4, icon: "powershell",          color: "5391FE" },
+  { name: "PowerShell", years: 4, icon: "powershell",          color: "5391FE", iconSrc: powershellLogo  },
   { name: "Wireshark",  years: 3, icon: "wireshark",          color: "1679A7" },
   { name: "Linux",      years: 3, icon: "linux",              color: "FCC624" },
   { name: "Git",        years: 3, icon: "git",                color: "F05032" },
