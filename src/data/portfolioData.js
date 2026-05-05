@@ -195,6 +195,12 @@ export const projects = [
     highlights: ["95%+ accuracy", "LSTM neural networks", "Real-time threat detection"]
   },
   {
+    title: "Computa",
+    description: "Three-tier agentic AI pipeline on Discord (Nemotron Swarm Agent). Routes user prompts through a classifier that decides between local inference via Ollama + Nemotron-mini and escalation to NVIDIA NIM cloud models. Persists conversation memory in SQLite with a demo_cache fallback when cloud credits are low, and exposes an Express dashboard for routing telemetry.",
+    tech: ["Node.js", "Python", "Discord.js", "Ollama", "NVIDIA NIM", "SQLite", "Express"],
+    highlights: ["Local + cloud LLM routing", "Agentic task classification", "Persistent SQLite memory"]
+  },
+  {
     title: "DubBetter Ring",
     description: "An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition.",
     tech: ["React", "TensorFlow", "OpenCV", "Raspberry Pi", "Socket.io", "TailwindCSS"],
