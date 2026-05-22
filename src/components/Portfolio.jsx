@@ -32,6 +32,11 @@ const edgePath = (a, b) => {
 
 const nodeById = Object.fromEntries(certGraph.nodes.map(n => [n.id, n]));
 
+// Mobile fallback groupings: branch lanes (top→bottom) + the merged spine.
+const branchNodes = (col) =>
+  certGraph.nodes.filter(n => n.col === col && !n.spine).sort((a, b) => a.row - b.row);
+const spineNodes = certGraph.nodes.filter(n => n.spine).sort((a, b) => a.row - b.row);
+
 const statusLabel = {
   completed: 'Completed',
   'in-progress': 'In Progress',
@@ -146,7 +151,8 @@ const Portfolio = () => {
             <span className="legend-item planned">{statusIcon.planned} Planned</span>
           </p>
 
-          <div className="cert-graph">
+          {/* Desktop: git-graph with converging branches */}
+          <div className="cert-graph cert-graph-desktop">
             <div className="cert-graph-branches">
               {certGraph.branches.map(b => (
                 <div key={b.id} className="cert-branch-label" style={{ left: `${(b.col + 0.5) * (100 / certGraph.branches.length)}%` }}>
@@ -169,7 +175,7 @@ const Portfolio = () => {
                     <path
                       key={i}
                       d={edgePath(a, b)}
-                      className={`cert-edge ${a.status} ${b.capstone ? 'merge' : ''}`}
+                      className={`cert-edge ${a.status} ${b.spine ? 'merge' : ''}`}
                     />
                   );
                 })}
@@ -194,6 +200,36 @@ const Portfolio = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Mobile: stacked branch lanes converging into the spine */}
+          <div className="cert-graph-mobile">
+            {certGraph.branches.map(b => (
+              <div key={b.id} className="cert-lane">
+                <h3 className="cert-lane-label">{b.label}</h3>
+                <ol className="cert-lane-nodes">
+                  {branchNodes(b.col).map(n => (
+                    <li key={n.id} className={`cert-m-node ${n.status}`}>
+                      <span className="cert-m-marker">{statusIcon[n.status]}</span>
+                      <span className="cert-m-name">{n.name}</span>
+                      <span className="cert-m-status">{statusLabel[n.status]}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+            <div className="cert-lane cert-lane-merge">
+              <h3 className="cert-lane-label">Convergence</h3>
+              <ol className="cert-lane-nodes">
+                {spineNodes.map(n => (
+                  <li key={n.id} className={`cert-m-node ${n.status} ${n.capstone ? 'capstone' : ''}`}>
+                    <span className="cert-m-marker">{statusIcon[n.status]}</span>
+                    <span className="cert-m-name">{n.name}</span>
+                    <span className="cert-m-status">{statusLabel[n.status]}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
@@ -231,6 +267,9 @@ const Portfolio = () => {
             {projects.map((project, i) => (
               <div key={i} className="project-card">
                 <h3>{project.title}</h3>
+                {project.hackathon && (
+                  <span className="project-hackathon">{project.hackathon}</span>
+                )}
                 <p className="project-description">{project.description}</p>
                 <div className="project-highlights">
                   {project.highlights.map((highlight, j) => (
@@ -268,23 +307,31 @@ const Portfolio = () => {
           <div className="contact-grid">
             <a href={`mailto:${personalInfo.email}`} className="contact-card">
               <span className="contact-icon">@</span>
-              <span className="contact-label">Email</span>
-              <span className="contact-value">{personalInfo.email}</span>
+              <span className="contact-text">
+                <span className="contact-label">Email</span>
+                <span className="contact-value">{personalInfo.email}</span>
+              </span>
             </a>
             <a href={`tel:${personalInfo.phone.replace(/[^0-9]/g, '')}`} className="contact-card">
               <span className="contact-icon">#</span>
-              <span className="contact-label">Phone</span>
-              <span className="contact-value">{personalInfo.phone}</span>
+              <span className="contact-text">
+                <span className="contact-label">Phone</span>
+                <span className="contact-value">{personalInfo.phone}</span>
+              </span>
             </a>
             <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="contact-card">
               <span className="contact-icon">in</span>
-              <span className="contact-label">LinkedIn</span>
-              <span className="contact-value">gabemvaldez</span>
+              <span className="contact-text">
+                <span className="contact-label">LinkedIn</span>
+                <span className="contact-value">gabemvaldez</span>
+              </span>
             </a>
             <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="contact-card">
               <span className="contact-icon">&lt;/&gt;</span>
-              <span className="contact-label">GitHub</span>
-              <span className="contact-value">ValdezGabe</span>
+              <span className="contact-text">
+                <span className="contact-label">GitHub</span>
+                <span className="contact-value">ValdezGabe</span>
+              </span>
             </a>
           </div>
           <a href="/resume.pdf" download="Gabe_Valdez_Resume.pdf" className="resume-button">
@@ -294,7 +341,9 @@ const Portfolio = () => {
       </section>
 
       <footer className="portfolio-footer">
-        <p>Built with React | Designed by Gabe Valdez</p>
+        <p className="footer-copy">
+          © {new Date().getFullYear()} {personalInfo.name} · {education.school}
+        </p>
       </footer>
     </div>
   );

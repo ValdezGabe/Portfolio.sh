@@ -17,56 +17,107 @@
 
 .portfolio-section-wrapper {
   width: 100%;
-  background: linear-gradient(180deg, #0a0a0a 0%, #111 50%, #0a0a0a 100%);
+  position: relative;
+  background: transparent;
 }
 
-/* Scroll indicator */
-.terminal-section::after {
-  content: '';
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 50px;
-  border: 2px solid rgba(0, 255, 0, 0.3);
-  border-radius: 20px;
-  animation: scrollBounce 2s infinite;
+/* ── Background FX: fixed layer behind all content ── */
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--term-bg);
 }
 
-.terminal-section::before {
-  content: '';
+/* Keep real content above the backdrop */
+.terminal-section,
+.portfolio-section-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Edges fade out so the rain stays minimal, not busy */
+.bg-rain {
   position: absolute;
-  bottom: 2.8rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: #00ff00;
-  border-radius: 50%;
-  animation: scrollDot 2s infinite;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* A single falling column of bits */
+.rain-col {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  font-family: var(--mono);
+  line-height: 1.35;
+  color: rgba(0, 255, 65, 0.16);
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.25);
+  white-space: pre;
+  user-select: none;
+  will-change: transform;
+  animation-name: rainFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rainFall {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(100vh); }
+}
+
+/* Slow horizontal scan sweep */
+.bg-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 255, 65, 0.04) 50%,
+    transparent 100%
+  );
+  height: 40vh;
+  animation: scanSweep 8s ease-in-out infinite;
+}
+
+@keyframes scanSweep {
+  0%   { transform: translateY(-50vh); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(150vh); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain-col,
+  .bg-scan { animation: none; }
+  .bg-scan { opacity: 0; }
 }
 
 .terminal-section {
   position: relative;
 }
 
-@keyframes scrollBounce {
-  0%, 100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.8;
-  }
+/* Scroll hint — terminal prompt style */
+.terminal-section::after {
+  content: 'scroll ↓';
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--term-green);
+  opacity: 0.55;
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
-@keyframes scrollDot {
-  0% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.25; transform: translateX(-50%) translateY(0); }
+  50%      { opacity: 0.7;  transform: translateX(-50%) translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-section::after { animation: none; }
 }

@@ -1,5 +1,109 @@
 import { useState, useEffect, useRef } from 'react';
+import {
+  personalInfo,
+  about,
+  education,
+  experience,
+  coreSkills,
+  additionalSkills,
+  certGraph,
+  projects,
+  seeking
+} from '../data/portfolioData';
 import './Terminal.css';
+
+// ── Terminal content is derived from portfolioData so it never drifts ──
+const BOX_W = 43;
+
+const box = (title) => {
+  const inner = BOX_W - 2;
+  const t = title.toUpperCase();
+  const left = Math.floor((inner - t.length) / 2);
+  const right = inner - t.length - left;
+  return `╔${'═'.repeat(inner)}╗\n║${' '.repeat(left)}${t}${' '.repeat(right)}║\n╚${'═'.repeat(inner)}╝`;
+};
+
+const certsByStatus = (status) =>
+  certGraph.nodes.filter(n => n.status === status).map(n => n.name);
+
+const aboutText = `
+${box('About Me')}
+
+${about}
+
+${personalInfo.quote}
+`;
+
+const educationText = `
+${box('Education')}
+
+${education.school}
+${education.degree} | ${education.minor}
+Focus: ${education.focus}
+Expected Graduation: ${education.graduation}
+GPA: ${education.gpa}
+
+Relevant Coursework:
+${education.coursework.map(c => `  • ${c}`).join('\n')}
+
+Certifications:
+${certsByStatus('completed').map(c => `  • ${c}`).join('\n')}
+${certsByStatus('in-progress').map(c => `  • ${c} (In Progress)`).join('\n')}
+`;
+
+const experienceText = `
+${box('Work Experience')}
+${experience.map(job => `
+${job.title}${job.upcoming ? '  [Incoming]' : ''}
+${job.company}
+${job.location} | ${job.period}
+${job.bullets.map(b => `  • ${b}`).join('\n')}`).join('\n')}
+`;
+
+const projectsText = `
+${box('Projects')}
+${projects.map(p => `
+${p.title}${p.hackathon ? ` [${p.hackathon}]` : ''}
+${p.description}
+Tech: ${p.tech.join(', ')}`).join('\n')}
+`;
+
+const skillsText = `
+${box('Technical Skills')}
+
+Core (years of experience):
+${coreSkills.map(s => `  ${s.name.padEnd(12)} ${s.years} ${s.years === 1 ? 'yr' : 'yrs'}`).join('\n')}
+
+${Object.entries(additionalSkills).map(([cat, items]) => `${cat}:\n  ${items.join(', ')}`).join('\n\n')}
+`;
+
+const contactText = `
+${box('Contact Info')}
+
+Email:    ${personalInfo.email}
+Phone:    ${personalInfo.phone}
+
+Feel free to reach out for opportunities or collaborations!
+`;
+
+const socialText = `
+${box('Social Links')}
+
+LinkedIn: ${personalInfo.linkedin}
+GitHub:   ${personalInfo.github}
+`;
+
+const seekingText = `
+${box('Looking For')}
+
+Targeting roles in:
+${seeking.map(s => `  • ${s}`).join('\n')}
+`;
+
+const allText = [
+  aboutText, educationText, experienceText,
+  projectsText, skillsText, seekingText, contactText, socialText
+].join('\n');
 
 // Typing animation component
 const TypingText = ({ text, speed = 15 }) => {
@@ -99,6 +203,7 @@ Available commands:
   experience    See my work experience
   projects      View my projects
   skills        See my technical skills
+  seeking       Roles I'm targeting
   contact       Get my contact information
   social        View my social media links
   resume        Download my resume
@@ -111,239 +216,15 @@ Tip: Use Tab for autocomplete, ↑↓ arrows for command history
   `
     }),
 
-    all: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║            ABOUT ME                   ║
-╚═══════════════════════════════════════╝
-
-Hi, my name is Gabe Valdez. Im a Computer Science major with a minor in Business Information Systems, focused on cybersecurity at Oregon State University.
-
-I have a strong foundation in networking, system administration, and problem-solving. Im currently seeking internship opportunities in cybersecurity, IT, or data analysis where I can apply my skills and grow as a professional.
-
-"If it's flipping hamburgers at McDonald's, be the best hamburger flipper in the world. Whatever it is you do you have to master your craft." - Snoop Dogg
-
-╔═══════════════════════════════════════╗
-║             EDUCATION                 ║
-╚═══════════════════════════════════════╝
-
-Oregon State University
-B.S. Computer Science | Minor in Business Information Systems
-Focus: Cybersecurity
-Expected Graduation: June 2027
-GPA: 3.45
-
-Relevant Coursework:
-• Network Security & Administration
-• System Administration
-• Data Structures & Algorithms
-• Database Management
-• Software Engineering
-
-Certifications:
-• CompTIA A+
-• Azure AZ-900 
-• CompTIA Network+ (In Progress)
-• CompTIA Security+ (In Progress)
-
-╔═══════════════════════════════════════╗
-║           WORK EXPERIENCE             ║
-╚═══════════════════════════════════════╝
-
-Looking for opportunities!
-Currently seeking internship positions in:
-• Information Security
-• SOC Analyst
-• Security Engineering
-• IT/System Administration
-
-
-Skills I bring:
-• Network security & administration
-• System troubleshooting & support
-• Python, C/C++, SQL programming
-• Cloud infrastructure (AWS)
-• DevOps tools (Docker, Terraform)
-
-╔═══════════════════════════════════════╗
-║            PROJECTS                   ║
-╚═══════════════════════════════════════╝
-
-DubBetter Ring
-An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition. Using TensorFlow for on-device inference and WebSocket connections for low-latency streaming, the system provides instant event notifications, activity timelines, and a YouTube-style interface for reviewing security events.
-Tech: React, TensorFlow, OpenCV, Raspberry Pi, Socket.io, TailwindCSS
-
-Game Server Automation
-Designed and implemented a fully automated infrastructure-as-code solution for deploying a containerized Minecraft server on AWS. Built using Terraform for infrastructure provisioning and Docker for containerization, the system automatically configures complete AWS networking architecture including VPC, security groups, and EC2 instances.
-Tech: AWS EC2, Docker, Terraform
-
-BrainBurst
-Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design.
-Tech: React, JavaScript, Tailwind CSS, Supabase
-
-Terminal Portfolio
-An interactive terminal-style portfolio
-Tech: React, Javascript
-
-╔═══════════════════════════════════════╗
-║        TECHNICAL SKILLS               ║
-╚═══════════════════════════════════════╝
-
-Certifications - CompTIA A+, CompTIA Network+, CompTIA Security+
-Languages - Python, C, C++, SQL, PHP, Javascript, Node.js, CSS, HTML, Prolog, Haskell
-Frameworks - React, Express, Tensorflow, Tensorflow lite
-Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powershell
-
-╔═══════════════════════════════════════╗
-║          CONTACT INFO                 ║
-╚═══════════════════════════════════════╝
-
-Email:    gabemakanavaldez@gmail.com
-Phone:    (808)446-6022
-
-╔═══════════════════════════════════════╗
-║         SOCIAL LINKS                  ║
-╚═══════════════════════════════════════╝
-
-LinkedIn: https://www.linkedin.com/in/gabemvaldez/
-GitHub:   https://github.com/ValdezGabe
-
-Feel free to reach out for opportunities or collaborations!
-`
-    }),
-
-    about: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║            ABOUT ME                   ║
-╚═══════════════════════════════════════╝
-
-Hi, my name is Gabe Valdez. Im a Computer Science major with a minor in Business Information Systems, focused on cybersecurity at Oregon State University.
-
-I have a strong foundation in networking, system administration, and problem-solving. Im currently seeking internship opportunities in cybersecurity, IT, or data analysis where I can apply my skills and grow as a professional.
-
-"If it's flipping hamburgers at McDonald's, be the best hamburger flipper in the world. Whatever it is you do you have to master your craft." - Snoop Dogg 
-`
-    }),
-
-    education: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║             EDUCATION                 ║
-╚═══════════════════════════════════════╝
-
-Oregon State University
-B.S. Computer Science | Minor in Business Information Systems
-Focus: Cybersecurity
-Expected Graduation: June 2027
-GPA: 3.42
-
-Relevant Coursework:
-• Network Security & Administration
-• System Administration
-• Data Structures & Algorithms
-• Database Management
-• Software Engineering
-
-Certifications:
-• CompTIA A+
-• CompTIA Network+ (In Progress)
-• CompTIA Security+ (In Progress)
-`
-    }),
-
-    experience: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║           WORK EXPERIENCE             ║
-╚═══════════════════════════════════════╝
-
-Looking for opportunities!
-Currently seeking internship positions in:
-• Cybersecurity
-• IT/System Administration
-• Data Analysis
-• Software Development
-
-Skills I bring:
-• Network security & administration
-• System troubleshooting & support
-• Python, C/C++, SQL programming
-• Cloud infrastructure (AWS)
-• DevOps tools (Docker, Terraform)
-`
-    }),
-    projects: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║            PROJECTS                   ║
-╚═══════════════════════════════════════╝
-
-DubBetter Ring
-An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a
-Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition. Using TensorFlow for on-device inference and WebSocket connections for low-latency streaming, the system provides instant event notifications, activity timelines, and a YouTube-style interface for reviewing security events. Built with React, TailwindCSS, and OpenCV, DubBetter Ring delivers enterprise-grade home security with an intuitive user experience
-Tech: React, TensorFlow, OpenCV, Raspberry Pi, Socket.io, TailwindCSS
-
-Game Server Automation
-Designed and implemented a fully automated infrastructure-as-code solution for deploying a containerized Minecraft server on AWS. Built using Terraform for infrastructure provisioning and Docker for containerization, the system automatically configures complete AWS networking
-architecture including VPC, security groups, and EC2 instances. Developed Bash automation scripts enabling single-command deployment and teardown workflows, significantly reducing operational overhead. Implemented production-ready features including persistent storage for game data, proper port routing for player connectivity, and encrypted SSH access for secure server administration.
-Tech: AWS EC2, Docker, Terraform
-
-BrainBurst
-Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design, increasing active learning engagement and reducing passive screen time by 40% across web and mobile interfaces
-Tech: React, JavaScript, Tailwind CSS, Supabas
-
-Terminal Portfolio
-An interactive terminal-style portfolio
-Tech: React, Javascript
-`
-    }),
-
-    skills: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║        TECHNICAL SKILLS               ║
-╚═══════════════════════════════════════╝
-
-Certifications - CompTIA A+, CompTIA Network+, CompTIA Security+
-Languages - Python, C, C++, SQL, PHP, Javascript, Node.js, CSS, HTML, Prolog, Haskell 
-Frameworks - React, Express, Tensorflow, Tensorflow lite
-Tools - AWS, Docker, NumPy, OpenCV, Git, CUDA, Ansible, Terraform, Bash, Powershell
-
-`
-    }),
-
-    contact: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║          CONTACT INFO                 ║
-╚═══════════════════════════════════════╝
-
-Email:    gabemakanavaldez@gmail.com
-Phone:    (808)446-6022
-
-Feel free to reach out for opportunities or collaborations!
-`
-    }),
-
-    social: () => ({
-      type: 'output',
-      content: `
-╔═══════════════════════════════════════╗
-║         SOCIAL LINKS                  ║
-╚═══════════════════════════════════════╝
-
-LinkedIn: https://www.linkedin.com/in/gabemvaldez/
-GitHub:   https://github.com/ValdezGabe
-`
-    }),
+    all:        () => ({ type: 'output', content: allText }),
+    about:      () => ({ type: 'output', content: aboutText }),
+    education:  () => ({ type: 'output', content: educationText }),
+    experience: () => ({ type: 'output', content: experienceText }),
+    projects:   () => ({ type: 'output', content: projectsText }),
+    skills:     () => ({ type: 'output', content: skillsText }),
+    seeking:    () => ({ type: 'output', content: seekingText }),
+    contact:    () => ({ type: 'output', content: contactText }),
+    social:     () => ({ type: 'output', content: socialText }),
 
     clear: () => {
       setHistory([]);
@@ -585,10 +466,8 @@ GitHub:   https://github.com/ValdezGabe
                 <pre className="ascii-mobile">{item.contentMobile}</pre>
                 <TypingText text={item.welcomeText} speed={20} />
               </div>
-            ) : item.type === 'input' || item.type === 'error' || index < history.length - 1 ? (
-              <pre>{item.content}</pre>
             ) : (
-              <TypingText text={item.content} speed={5} />
+              <pre>{item.content}</pre>
             )}
           </div>
         ))}

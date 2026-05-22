@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,13 +7,26 @@
 }
 
 :root {
-  font-family: 'Courier New', monospace;
+  /* Cybersecurity-terminal design tokens */
+  --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, 'Courier New', monospace;
+  --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --term-bg: #0a0a0a;
+  --term-bg-deep: #050608;
+  --term-card: #0c130e;
+  --term-green: #00ff41;
+  --term-green-dim: #0bbf38;
+  --term-amber: #ffb000;
+  --term-red: #ff3333;
+  --term-muted: #8a939e;
+  --term-border: #1f1f1f;
+
+  font-family: var(--mono);
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: dark;
-  color: #00ff00;
-  background-color: #0a0a0a;
+  color: var(--term-green);
+  background-color: var(--term-bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

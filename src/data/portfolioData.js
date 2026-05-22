@@ -149,8 +149,9 @@ export const additionalSkills = {
   ]
 };
 
-// Git-graph layout: 3 branches converge into CISSP.
+// Git-graph layout: 3 branches converge into CISM, then capstone CISSP.
 // col = branch lane (0=Cyber, 1=Cloud, 2=DevOps), row = vertical position.
+// spine nodes (CISM, CISSP) sit on the center lane after all branches merge.
 export const certGraph = {
   branches: [
     { id: 'cyber',  label: 'Cybersecurity',   col: 0 },
@@ -161,7 +162,7 @@ export const certGraph = {
     { id: 'aplus',   name: 'CompTIA A+',          status: 'completed',   col: 0, row: 0 },
     { id: 'netplus', name: 'CompTIA Network+',    status: 'in-progress', col: 0, row: 1 },
     { id: 'secplus', name: 'CompTIA Security+',   status: 'in-progress', col: 0, row: 2 },
-    { id: 'sc200',   name: 'Microsoft SC-200',    status: 'in-progress',     col: 0, row: 3 },
+    { id: 'sc200',   name: 'Microsoft SC-200',    status: 'in-progress', col: 0, row: 3 },
 
     { id: 'az900',   name: 'Azure AZ-900',        status: 'completed',   col: 1, row: 0 },
     { id: 'az104',   name: 'Azure AZ-104',        status: 'planned',     col: 1, row: 1 },
@@ -170,20 +171,24 @@ export const certGraph = {
     { id: 'tf',      name: 'Terraform Associate', status: 'planned',     col: 2, row: 0 },
     { id: 'cka',     name: 'CKA',                 status: 'planned',     col: 2, row: 1 },
 
-    { id: 'cissp',   name: 'CISSP',        status: 'planned',     col: 1, row: 4, capstone: true }
+    { id: 'cism',    name: 'CISM',                status: 'planned',     col: 1, row: 4, spine: true },
+    { id: 'cissp',   name: 'CISSP',               status: 'planned',     col: 1, row: 5, spine: true, capstone: true }
   ],
   edges: [
     { from: 'aplus',   to: 'netplus' },
     { from: 'netplus', to: 'secplus' },
     { from: 'secplus', to: 'sc200' },
-    { from: 'sc200',   to: 'cissp' },
 
     { from: 'az900',   to: 'az104' },
     { from: 'az104',   to: 'az500' },
-    { from: 'az500',   to: 'cissp' },
 
     { from: 'tf',      to: 'cka' },
-    { from: 'cka',     to: 'cissp' }
+
+    { from: 'sc200',   to: 'cism' },
+    { from: 'az500',   to: 'cism' },
+    { from: 'cka',     to: 'cism' },
+
+    { from: 'cism',    to: 'cissp' }
   ]
 };
 
@@ -196,12 +201,14 @@ export const projects = [
   },
   {
     title: "Computa",
+    hackathon: "BeaverHacks 2026",
     description: "Three-tier agentic AI pipeline on Discord (Nemotron Swarm Agent). Routes user prompts through a classifier that decides between local inference via Ollama + Nemotron-mini and escalation to NVIDIA NIM cloud models. Persists conversation memory in SQLite with a demo_cache fallback when cloud credits are low, and exposes an Express dashboard for routing telemetry.",
     tech: ["Node.js", "Python", "Discord.js", "Ollama", "NVIDIA NIM", "SQLite", "Express"],
     highlights: ["Local + cloud LLM routing", "Agentic task classification", "Persistent SQLite memory"]
   },
   {
     title: "DubBetter Ring",
+    hackathon: "DubHacks 2025",
     description: "An intelligent doorbell and security camera system built for DubHacks 2025 that combines real-time video streaming with AI-powered object detection. The platform streams live 1080p HD video from a Raspberry Pi camera to a web dashboard, where users can monitor their front door with automatic motion detection and person recognition.",
     tech: ["React", "TensorFlow", "OpenCV", "Raspberry Pi", "Socket.io", "TailwindCSS"],
     highlights: ["Real-time 1080p streaming", "AI object detection", "Instant notifications"]
@@ -214,6 +221,7 @@ export const projects = [
   },
   {
     title: "BrainBurst",
+    hackathon: "BeaverHacks 2025",
     description: "Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design.",
     tech: ["React", "JavaScript", "Tailwind CSS", "Supabase"],
     highlights: ["E2E encryption", "Spaced repetition", "JWT auth"]
