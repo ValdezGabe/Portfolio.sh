@@ -194,17 +194,27 @@ export const certGraph = {
 
 export const projects = [
   {
-    title: "ML-Based Network Intrusion Detection System",
-    description: "Architected a Deep Learning Network Intrusion Detection System (NIDS) using LSTM neural networks to classify 9 cybersecurity threat categories with 95%+ accuracy across 100K+ network traffic samples from UNSW-NB15 dataset. Implemented MLOps monitoring via Tableau Cloud to visualize inference confidence and detect concept drift, enabling proactive model retraining.",
-    tech: ["Python", "TensorFlow", "Keras", "Scikit-learn", "Pandas", "Tableau"],
-    highlights: ["95%+ accuracy", "LSTM neural networks", "Real-time threat detection"]
-  },
-  {
     title: "Computa",
     hackathon: "BeaverHacks 2026",
+    repo: "https://github.com/IvanW5X/Computa",
     description: "Three-tier agentic AI pipeline on Discord (Nemotron Swarm Agent). Routes user prompts through a classifier that decides between local inference via Ollama + Nemotron-mini and escalation to NVIDIA NIM cloud models. Persists conversation memory in SQLite with a demo_cache fallback when cloud credits are low, and exposes an Express dashboard for routing telemetry.",
     tech: ["Node.js", "Python", "Discord.js", "Ollama", "NVIDIA NIM", "SQLite", "Express"],
     highlights: ["Local + cloud LLM routing", "Agentic task classification", "Persistent SQLite memory"]
+  },
+  {
+    title: "SecureFlow",
+    hackathon: "GitLab AI Hackathon",
+    repo: "https://gitlab.com/gitlab-ai-hackathon/participants/34936136",
+    description: "An autonomous security remediation pipeline built on GitLab's Duo Agent Platform that orchestrates three AI agents to triage, fix, and verify vulnerabilities end-to-end. A Triage agent performs MITRE ATT&CK mapping and contextual scoring to filter false positives, a Remediate agent generates tested code fixes and OWASP-guided merge requests, and a Gate agent reviews for security regressions with A–F scoring. Cut mean time to remediation from ~3 days to ~12 minutes across the OWASP Top 10.",
+    tech: ["GitLab Duo", "Claude AI", "BigQuery", "MITRE ATT&CK", "YAML"],
+    highlights: ["3-agent remediation pipeline", "MTTR: 3 days → 12 min", "OWASP Top 10 coverage"]
+  },
+  {
+    title: "ML-Based Network Intrusion Detection System",
+    repo: "https://github.com/ValdezGabe/ML-IDS",
+    description: "Architected a Deep Learning Network Intrusion Detection System (NIDS) using LSTM neural networks to classify 9 cybersecurity threat categories with 95%+ accuracy across 100K+ network traffic samples from UNSW-NB15 dataset. Implemented MLOps monitoring via Tableau Cloud to visualize inference confidence and detect concept drift, enabling proactive model retraining.",
+    tech: ["Python", "TensorFlow", "Keras", "Scikit-learn", "Pandas", "Tableau"],
+    highlights: ["95%+ accuracy", "LSTM neural networks", "Real-time threat detection"]
   },
   {
     title: "DubBetter Ring",
@@ -215,6 +225,7 @@ export const projects = [
   },
   {
     title: "Game Server Automation",
+    repo: "https://github.com/ValdezGabe/Game-Server-Automation",
     description: "Designed and implemented a fully automated infrastructure-as-code solution for deploying a containerized Minecraft server on AWS. The system automatically configures complete AWS networking architecture including VPC, security groups, and EC2 instances.",
     tech: ["AWS EC2", "Docker", "Terraform"],
     highlights: ["Single-command deployment", "Infrastructure as Code", "Persistent storage"]
@@ -222,12 +233,14 @@ export const projects = [
   {
     title: "BrainBurst",
     hackathon: "BeaverHacks 2025",
+    repo: "https://github.com/raymondcen/brainburst",
     description: "Built a full-stack flashcard learning platform featuring end-to-end encryption and JWT authentication to protect user study data. Engineered interactive study modes with spaced repetition algorithms and responsive design.",
     tech: ["React", "JavaScript", "Tailwind CSS", "Supabase"],
     highlights: ["E2E encryption", "Spaced repetition", "JWT auth"]
   },
   {
     title: "Terminal Portfolio",
+    repo: "https://github.com/ValdezGabe/Portfolio.sh",
     description: "An interactive terminal-style portfolio website that showcases my skills and projects through a command-line interface experience.",
     tech: ["React", "JavaScript", "CSS"],
     highlights: ["Interactive CLI", "Command history", "Tab autocomplete"]
